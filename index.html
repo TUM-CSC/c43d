@@ -13386,15 +13386,13 @@ $$ a * 2^{64} + b \mod S $$$$ a * 2^{48} * 2^{16} + b \mod S $$$$ (a * 2^{48} \m
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Outlook">Outlook<a class="anchor-link" href="#Outlook">&#182;</a></h2><p>The parallel minimax solver is capable of solving positions with 10 placed stones on a 28 core cluster. Solving the game at this speed would take years. Still, searching the game tree in parallel seems to be working well, i.e., working with multiple cpu cores, significantly imroved the performance of our solver. There are several ideas for future work.</p>
-<ol>
+<ul>
 <li><p>Improving the minimax solver. While I think that it is not possible to try to explore much more than 4 million positions per second, the number of positions that need to be explored can still be reduced. For this, I think the best candidates are the move order for the early game and the transposition table.</li>
-</ol>
-<ol>
+</li>
 <li><p>The move heuristic was tested with 28 or more stones placed. It seems like the move order gets worse the less stones are placed. A better heuristic for positions with 10 to 28 stones could reduce the number of positions that need to be searched.</li>
-</ol>
-<ol>
+</li>
 <li><p>A more dynamic transposition table. The transposition table has the problem that it prefers positions with a certain number of stones. The less stones a position has, the more likely it is to receive a fixed position in the table. Most positions have many stones and they overwrite other positions in the transposition table, only positions with large subtrees are saved from this. I think that in between there are many positions that have large subtrees, but not large enough subtrees, that get overwritten by relatively unimportant positions. One idea to solve this problem is to split the transposition table into multiple tables. One for each amount of stones. All positions with 35 stones placed are then written in one transposition table and do not need to compete for space with positions that have 24 or 60 placed stones. The individual tables would be smaller, but they could also be adjusted independently. Not only their size but also the replacement strategy could be different for each depth, e.g,. the transposition table that saves positions with 60 stones could probably use NEW as replacement strategy and be relatively small. When so many stones are placed most hits are from recently seen positions and they save only little time.</li>
-</ol>
+</li>
 
 </div>
 </div>
